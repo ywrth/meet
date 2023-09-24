@@ -4,10 +4,16 @@ import { render } from '@testing-library/react';
 import App from '../App';
 
 describe('<App /> component', () => {
-    test('renders list of events', () => {
-        // eslint-disable-next-line testing-library/no-node-access
-        const AppDOM = render(<App />).container.firstChild;
-        // eslint-disable-next-line testing-library/no-node-access
-        expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
-      });
+  let AppDOM;
+  beforeEach(() => {
+    AppDOM = render(<App />).container.firstChild;
+  })
+
+  test('renders list of events', () => {
+    expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
+  });
+
+  test('render CitySearch', () => {
+    expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
+  });
 });
