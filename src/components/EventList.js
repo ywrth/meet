@@ -1,15 +1,14 @@
+// src/components/EventList.js
 import Event from './Event';
 
 const EventList = ({ events }) => {
   return (
-<ul id="event-list">
-  {events.map((event, index) => (
-    <li key={index} className="event">
-      {event.name} {/* Replace with actual data property */}
-    </li>
-  ))}
-</ul>
+    <ul id="event-list">
+      {events ?
+       events.map(event => <Event key={event.id} event={event} />) :
+       null}
+    </ul>
   );
-};
+}
 
 export default EventList;

@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Pie, PieChart, ResponsiveContainer } from 'recharts';
 
-const EventGenresChart = ({ events }) => {
+const EventGenresChart = ({ allLocations, events }) => {
   const [data, setData] = useState([]);
   const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
+
+  useEffect(() => {
+    setData(getData());
+  }, [events, allLocations]);
 
   const renderCustomizedLabel = ({
     cx,
@@ -21,7 +25,7 @@ const EventGenresChart = ({ events }) => {
       <text
         x={x}
         y={y}
-        fill="var(--color-text)"
+        fill="#000000"
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
       >
@@ -36,6 +40,8 @@ const EventGenresChart = ({ events }) => {
         event.summary.includes(genre)
       );
 
+    
+
       return {
         name: genre,
         value: filteredEvents.length,
@@ -44,9 +50,7 @@ const EventGenresChart = ({ events }) => {
     return data;
   };
 
-  useEffect(() => {
-    setData(getData());
-  }, [`${events}`]);
+  
 
   return (
     <ResponsiveContainer width="99%" height={400}>
@@ -54,7 +58,7 @@ const EventGenresChart = ({ events }) => {
         <Pie
           data={data}
           dataKey="value"
-          fill="#8884d8"
+          fill="#E58F4B"
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius={150}

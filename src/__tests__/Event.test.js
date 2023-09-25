@@ -37,7 +37,7 @@ describe('<Event /> Component', () => {
     expect(details).not.toBeInTheDocument();
   });
 
-  test('show details after user clicks button "show details"', async () => {
+  test('show details when user clicks button "show details"', async () => {
     const user = userEvent.setup();
     const button = EventComponent.queryByText('Show Details');
     await user.click(button);
@@ -47,7 +47,7 @@ describe('<Event /> Component', () => {
     expect(details).toBeInTheDocument();
   });
 
-  test('hide details after user clicks button "hide details"', async () => {
+  test('hide details when user clicks button "hide details"', async () => {
     const button = EventComponent.queryByText('Show Details');
     const eventDOM = EventComponent.container.firstChild;
     await userEvent.click(button);
