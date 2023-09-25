@@ -52,10 +52,15 @@ Given the user is viewing the list of events;
 When the user selects 'Show Details' for an event;
 Then the user should see more detailed information about that event.
 
-2. Scenario: User can hide details of an event.
+2. User can hide details of an event.
 Given the user has opened the details of an event;
 When the user selects 'Hide Details' for that event;
 Then the additional details about that event should be hidden.
+
+3. Collapse an event to hide details.
+Given the user sees event details,
+When the user presses a button to hide event details,
+Then the details of that event will be hidden.
 
 ### Feature 3: Specify Number of Events
 
