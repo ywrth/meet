@@ -7,7 +7,7 @@ const feature = loadFeature('./src/features/specifynumberOfEvents.feature');
 
 defineFeature(feature, test => {
 
-  test('Default number is 32 when not specified.', ({ given, when, then }) => {
+  test('Default number is 33 when not specified.', ({ given, when, then }) => {
     let AppComponent;
     let eventList;
     given('the user has not specified or filtered any number,', () => {
@@ -24,7 +24,7 @@ defineFeature(feature, test => {
     });
 
     then(/^the default number of displayed events should be (\d+).$/, (arg0) => {
-        expect(eventList.length).toEqual(33);
+        expect(eventList.length).toEqual(32);
       });
 });
 
