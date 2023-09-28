@@ -1,14 +1,9 @@
-// src/App.js
-
+import React, { useEffect, useState } from 'react';
 import CitySearch from './components/CitySearch';
-//import CityEventsChart from './components/CityEventsChart';
-//import EventGenresChart from './components/EventGenresChart';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
-import { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
-
 import './App.css';
 
 const App = () => {
@@ -21,26 +16,33 @@ const App = () => {
   const [warningAlert, setWarningAlert] = useState('');
 
   useEffect(() => {
-    fetchData();
-  }, [currentCity, currentNOE]);
+    const fetchData = async () => {
+      try {
+        const allEvents = await getEvents();
+        const filteredEvents = currentCity === "See all cities"
+          ? allEvents
+          : allEvents.filter(event => event.location === currentCity);
 
-  const fetchData = async () => {
-    const allEvents = await getEvents();
-    const filteredEvents = currentCity === "See all cities" ?
-      allEvents :
-      allEvents.filter(event => event.location === currentCity)
-    setEvents(filteredEvents.slice(0, currentNOE));
-    setAllLocations(extractLocations(allEvents));
-  };
+        setEvents(filteredEvents.slice(0, currentNOE));
+        setAllLocations(extractLocations(allEvents));
+
+        // Remove the loading overlay once data is fetched
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) overlay.remove();
+
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+        // You might want to set an error state here to notify the user.
+      }
+    };
+
+    fetchData();
+  }, [currentCity, currentNOE]); // fetchData will run when the component mounts and when currentCity or currentNOE changes.
 
   useEffect(() => {
-    if (navigator.onLine) {
-      setWarningAlert('');
-    } else {
-      setWarningAlert('You are offline!');
-    }
-    fetchData();
-  }, [currentCity, currentNOE]);
+    if (!navigator.onLine) setWarningAlert('You are offline!');
+    else setWarningAlert('');
+  }, []); // This will run only when the component mounts.
 
   return (
     <div className="App">
